@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { google } from 'googleapis'
+import { OAuth2Client } from 'google-auth-library' // Importando o tipo correto
 
 // Função para autenticar e obter acesso ao Google Sheets
 async function getAuthSheets() {
@@ -11,12 +12,13 @@ async function getAuthSheets() {
     scopes: ['https://www.googleapis.com/auth/spreadsheets'], // Escopo para leitura
   })
 
-  const client = await auth.getClient()
+  // Obtenha o cliente de autenticação como um OAuth2Client
+  const client = (await auth.getClient()) as OAuth2Client
 
   // Instância do serviço Google Sheets
   const googleSheets = google.sheets({
     version: 'v4',
-    auth: client,
+    auth: client, // Passa o cliente autenticado
   })
 
   // ID da planilha
@@ -34,13 +36,12 @@ export async function POST(req: Request) {
       spreadsheetId,
       range: 'Teste1!A2:C2',
       valueInputOption: 'USER_ENTERED',
-      resource: {
+      requestBody: {
         values: values,
       },
     })
     return NextResponse.json(updateValue.data)
   } catch (error) {
-    // res.status(500).json({ error: 'Failed to create earning.' })
     return NextResponse.json(
       {
         message: 'error',
