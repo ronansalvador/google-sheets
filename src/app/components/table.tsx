@@ -6,11 +6,12 @@ type TableRow = string[] // Ajuste conforme necessário, se os dados forem de ou
 
 const Tabela = () => {
   const [rows, setRows] = useState<TableRow[]>([]) // Define o tipo do estado
+  const URL = process.env.NEXT_PUBLIC_URL_API
 
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/rows`)
+        const response = await fetch(`${URL}api/rows`)
         const data = await response.json()
         console.log('data', data)
         if (data && Array.isArray(data.values)) {

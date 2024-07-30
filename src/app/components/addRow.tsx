@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 const AddRow = () => {
+  const URL = process.env.NEXT_PUBLIC_URL_API
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -21,7 +22,7 @@ const AddRow = () => {
 
     // Lógica para enviar os dados para o backend
     try {
-      const response = await fetch('http://localhost:3000/api/rows', {
+      const response = await fetch(`${URL}api/rows`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
