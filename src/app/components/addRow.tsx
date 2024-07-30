@@ -18,8 +18,6 @@ const AddRow = () => {
       ],
     }
 
-    console.log('Novo dado de entrada:', newRow)
-
     // Lógica para enviar os dados para o backend
     try {
       const response = await fetch(`${URL}api/rows`, {
@@ -34,8 +32,7 @@ const AddRow = () => {
         throw new Error('Erro ao enviar dados para o backend')
       }
 
-      const result = await response.json()
-      console.log('Resposta do backend:', result)
+      // const result = await response.json()
 
       // Limpa os campos após o envio
       setDate('')
